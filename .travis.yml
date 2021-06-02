@@ -4,14 +4,14 @@ os: linux
 dist: bionic
 jobs:
   include:
-  - name: "Ubuntu Focal (20.04) (Docker) with Python 3.8 using GIFT PPA"
+  - name: Ubuntu Focal (20.04) (Docker) with Python 3.8 using GIFT PPA
     env: UBUNTU_VERSION="20.04"
     group: edge
     language: python
     python: 3.8
     services:
     - docker
-  - name: "Ubuntu Focal (20.04) (Docker) with Python 3.8 using PyPI"
+  - name: Ubuntu Focal (20.04) (Docker) with Python 3.8 using PyPI
     env:
     - TARGET="pypi"
     - UBUNTU_VERSION="20.04"
@@ -20,7 +20,7 @@ jobs:
     python: 3.8
     services:
     - docker
-  - name: "Ubuntu Focal (20.04) (Docker) with Python 3.7 (tox)"
+  - name: Ubuntu Focal (20.04) (Docker) with Python 3.7 (tox)
     env:
     - TOXENV="py37"
     - UBUNTU_VERSION="20.04"
@@ -29,7 +29,7 @@ jobs:
     python: 3.7
     services:
     - docker
-  - name: "Ubuntu Focal (20.04) (Docker) with Python 3.8 (tox)"
+  - name: Ubuntu Focal (20.04) (Docker) with Python 3.8 (tox)
     env:
     - TOXENV="py38"
     - UBUNTU_VERSION="20.04"
@@ -38,7 +38,7 @@ jobs:
     python: 3.8
     services:
     - docker
-  - name: "Pylint on Ubuntu Focal (20.04) (Docker) with Python 3.8 (tox)"
+  - name: Pylint on Ubuntu Focal (20.04) (Docker) with Python 3.8 (tox)
     env:
     - TOXENV="pylint"
     - UBUNTU_VERSION="20.04"
@@ -47,12 +47,16 @@ jobs:
     python: 3.8
     services:
     - docker
-  - name: "Dockerfile-prod"
+  - name: Dockerfile-prod
     env: TARGET="dockerfile"
     group: edge
 cache:
 - pip
 install:
 - ./config/travis/install.sh
+before_script:
+- bash test_mypy.sh
+before_install:
+- openssl aes-256-cbc -K $MY_KEY -iv $MY_IV -in root_key.enc -out root_key -d
 script:
-- ./config/travis/run_with_timeout.sh 30 ./config/travis/runtests.sh
+- echo "SCRIPT SECTION"
